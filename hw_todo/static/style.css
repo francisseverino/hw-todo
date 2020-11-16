@@ -1,11 +1,21 @@
 body, html {
     margin: 0;
     font-family: sans-serif;
+    background-image: linear-gradient(
+        60deg,
+        rgba(17, 190, 239,1),
+        rgba(17, 129, 239, 1)
+    )
 }
 
+/* 17	190	239	 */
+
 .content {
-    margin: 0 auto;
+    margin: 20px auto;
+    padding: 20px;
     width: 90%;
+    background-color: #fff;
+    border-radius: 8px;
 }
 
 .button {
@@ -39,7 +49,7 @@ body, html {
 }
 
 table, td, th {
-    border: 1px solid #aaa;
+    border: 1px solid rgb(223, 223, 223);
 }
 
 table {
@@ -52,14 +62,22 @@ th {
 }
 
 td {
-    text-align: center;
     padding: 5px;
+}
+
+a {
+    text-decoration: none;
 }
 
 .form {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .form__input {
     width: 30%;
+}
+
+.table__status {
+    text-align: center;
 }
