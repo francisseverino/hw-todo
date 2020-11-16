@@ -1,0 +1,65 @@
+body, html {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.content {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.button {
+    background-color: red;
+}
+
+.button {
+    cursor: pointer;
+    color: #000;
+    background-color: #e6e6e6;
+    outline: none;
+    border: none;
+    font-weight: 700;
+    border-radius: 4px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    /* margin-right: 1rem; */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.button:hover {
+    color: #fff;
+    background-color: rgba(51,51,51,0.5);
+    transition: all 0.2s;
+}
+
+.button.green {
+    color: #000;
+    background-color: #98FB98;
+}
+
+table, td, th {
+    border: 1px solid #aaa;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    height: 30px;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+}
+
+.form {
+    margin-top: 20px;
+}
+
+.form__input {
+    width: 30%;
+}
