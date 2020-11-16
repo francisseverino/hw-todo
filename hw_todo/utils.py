@@ -10,13 +10,20 @@ BASE_URL = "https://canvas.instructure.com/api/v1/courses"
 
 
 def get_courses():
-    """Returns list of courses"""
+    """
+    Returns list of active courses in Canvas LMS for given user's token
+    :return: List of courses
+    """
     course_list = requests.get(
         BASE_URL, params={'access_token': CANVAS_TOKEN, 'enrollment_state': 'active'})
     return course_list.json()
 
 
 def get_canvas_tasks():
+    """
+    Returns a list of upcoming assignments in Canvas LMS for given user's token
+    :return: List of objects {canvas_id, assignment, due_Date, course}
+    """
     # ? Maybe call another endpoint because some professors don't have assignments page
     tasks = []
 

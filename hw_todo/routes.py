@@ -7,6 +7,11 @@ from .utils import get_canvas_tasks
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    """
+    (GET, POST)
+    GET -> Homepage, returns list of tasks
+    POST -> Add a new task to the db
+    """
     if request.method == 'POST':
         assignment = request.form['assignment']
         due_date = datetime.strptime(request.form['due_date'], '%Y-%m-%dT%H:%M')
@@ -28,6 +33,11 @@ def index():
 
 
 def check_if_exists(canvas_id):
+    """
+    Helper Method
+    Checks if a given canvas assignment already exists in the db
+    :return: Boolean (True if exists in db, False if not)
+    """
     existing_tasks = Todo.query.all()
     for task in existing_tasks:
         if task.canvas_id == canvas_id:
@@ -38,6 +48,9 @@ def check_if_exists(canvas_id):
 
 @app.route('/canvas',)
 def canvas():
+    """
+    (GET)
+    """
     tasks = get_canvas_tasks()
     for task in tasks:
         if not check_if_exists(task['canvas_id']):
@@ -54,6 +67,9 @@ def canvas():
 
 @app.route('/complete/<int:id>')
 def complete(id):
+    """
+    (PUT)
+    """
     task_to_complete = Todo.query.get_or_404(id)
     
 
@@ -68,6 +84,9 @@ def complete(id):
 
 @app.route('/delete/<int:id>')
 def delete(id):
+    """
+    (DELETE)
+    """
     task_to_delete = Todo.query.get_or_404(id)
 
     try:
@@ -80,6 +99,9 @@ def delete(id):
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
+    """
+    (PUT)
+    """
     task = Todo.query.get_or_404(id)
     task.due_date = task.due_date.strftime('%Y-%m-%dT%H:%M') # converts due date to string
 
