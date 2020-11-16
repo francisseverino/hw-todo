@@ -23,7 +23,7 @@
             <th>Assignments</th>
             <th>Due</th>
             <th>Course</th>
-            <th>Status</th>
+            <th>Completed</th>
             <th>Actions</th>
         </tr>
         {% for task in tasks %}
@@ -32,11 +32,13 @@
             <td>{{ task.due_date.date() }}</td>
             <td>{{ task.course }}</td>
             <td class="table__status">
-                {% if task.completed == False %}
+                <input type="checkbox" class="checkbox" name="isCompleted"{% if task.completed %} checked {% else %}{% endif %} 
+                onclick='window.location.assign("/complete/{{task.id}}")'/>
+                <!-- {% if task.completed == False %}
                 <a class="button" href="/complete/{{task.id}}">Not Complete</a>
                 {% else %}
                 <a class="button green" href="/complete/{{task.id}}">Completed</a>
-                {% endif %}
+                {% endif %} -->
             </td>
             <td>
                 <a href="/delete/{{task.id}}">Delete</a>
