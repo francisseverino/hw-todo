@@ -50,6 +50,7 @@ def check_if_exists(canvas_id):
 def canvas():
     """
     (GET)
+    Updates the db with all new assignments from Canvas LMS 
     """
     tasks = get_canvas_tasks()
     for task in tasks:
@@ -69,6 +70,7 @@ def canvas():
 def complete(id):
     """
     (PUT)
+    Updates the completed field of the given assignment to either True or False
     """
     task_to_complete = Todo.query.get_or_404(id)
     
@@ -86,6 +88,7 @@ def complete(id):
 def delete(id):
     """
     (DELETE)
+    Deletes the given assignment
     """
     task_to_delete = Todo.query.get_or_404(id)
 
@@ -101,6 +104,7 @@ def delete(id):
 def update(id):
     """
     (PUT)
+    Updates any field of the given assignment
     """
     task = Todo.query.get_or_404(id)
     task.due_date = task.due_date.strftime('%Y-%m-%dT%H:%M') # converts due date to string
