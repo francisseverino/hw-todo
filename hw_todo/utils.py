@@ -28,7 +28,6 @@ def get_canvas_tasks():
         response = requests.get('{}/{}/assignments'.format(BASE_URL, course_id), params={'access_token' : CANVAS_TOKEN, 'bucket' : 'upcoming'})
         assignments = response.json()
         course_name = ' '.join(course.get('name').split()) #substitute multiple whitespaces with one
-        print(course_name)
 
 
         for assignment in assignments:
@@ -45,5 +44,3 @@ def get_canvas_tasks():
                 "course": course_name
                 })
     return tasks
-
-get_canvas_tasks()
