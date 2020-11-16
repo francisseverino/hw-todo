@@ -2,6 +2,7 @@ from hw_todo import app, db
 from flask import render_template, url_for, request, redirect
 from datetime import datetime
 from hw_todo.models import Todo 
+from .utils import get_canvas_tasks
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -24,6 +25,31 @@ def index():
     else:
         tasks = Todo.query.order_by(Todo.due_date).all() #Orders by due date
         return render_template('index.html', tasks=tasks)
+
+
+def check_if_exists(canvas_id):
+    existing_tasks = Todo.query.all()
+    for task in existing_tasks:
+        if task.canvas_id == canvas_id:
+            return True
+    return False
+
+
+
+@app.route('/canvas',)
+def canvas():
+    tasks = get_canvas_tasks()
+    for task in tasks:
+        if not check_if_exists(task['canvas_id']):
+            new_task = Todo(assignment=task['assignment'], due_date=task['due_date'], course=task['course'], canvas_id=task['canvas_id'])
+            try:
+                db.session.add(new_task)
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                return 'There was an issue adding your task'
+    
+    return redirect('/')
 
 
 @app.route('/complete/<int:id>')
@@ -69,6 +95,3 @@ def update(id):
     else:
         return render_template('update.html', task=task, )
 
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
