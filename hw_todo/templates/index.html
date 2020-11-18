@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">Assignments</h1>
+    <h1 class="content__header">Assignments</h1>
     <div class="form">
         <form action="/" method="POST">
             <input type="text" name="assignment" placeholder="Assignment" class="form__input">
@@ -18,7 +18,7 @@
     {% if tasks|length < 1 %}
     <h4 style="text-align: center">There are no tasks. Create one above!</h4>
     {% else %}
-    <table>
+    <table class="table">
         <tr>
             <th>Assignments</th>
             <th>Due</th>
@@ -27,18 +27,13 @@
             <th>Actions</th>
         </tr>
         {% for task in tasks %}
-        <tr>
-            <td>{{ task.assignment }}</td>
+        <tr class="table__row">
+            <td class="table__assignments">{{ task.assignment }}</td>
             <td>{{ task.due_date.date() }}</td>
             <td>{{ task.course }}</td>
             <td class="table__status">
                 <input type="checkbox" class="checkbox" name="isCompleted"{% if task.completed %} checked {% else %}{% endif %} 
                 onclick='window.location.assign("/complete/{{task.id}}")'/>
-                <!-- {% if task.completed == False %}
-                <a class="button" href="/complete/{{task.id}}">Not Complete</a>
-                {% else %}
-                <a class="button green" href="/complete/{{task.id}}">Completed</a>
-                {% endif %} -->
             </td>
             <td>
                 <a href="/delete/{{task.id}}">Delete</a>
