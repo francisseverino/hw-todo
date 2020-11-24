@@ -32,15 +32,17 @@ def get_canvas_tasks():
     for course in courses:
         course_id = course.get('id')
 
-        response = requests.get('{}/{}/assignments'.format(BASE_URL, course_id), params={'access_token' : CANVAS_TOKEN, 'bucket' : 'upcoming'})
+        response = requests.get('{}/{}/assignments'.format(BASE_URL, course_id),
+                                params={'access_token': CANVAS_TOKEN, 'bucket': 'upcoming'})
         assignments = response.json()
-        course_name = ' '.join(course.get('name').split()) #substitute multiple whitespaces with one
-
+        # substitute multiple whitespaces with one
+        course_name = ' '.join(course.get('name').split())
 
         for assignment in assignments:
             assignment_id = assignment.get('id')
             assignment_name = assignment.get('name')
-            due_date = datetime.strptime(assignment.get('due_at'), '%Y-%m-%dT%H:%M:%SZ')
+            due_date = datetime.strptime(
+                assignment.get('due_at'), '%Y-%m-%dT%H:%M:%SZ')
             # description = assignment.get('description') #TODO: Use this later to show client description of assignments
             # html_url = assignment.get('html_url') # TODO: Use this later to give client a clickeable link to the assignment page
 
@@ -49,5 +51,5 @@ def get_canvas_tasks():
                 "assignment": assignment_name,
                 "due_date": due_date,
                 "course": course_name
-                })
+            })
     return tasks
