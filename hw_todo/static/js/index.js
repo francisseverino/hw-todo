@@ -52,5 +52,17 @@ window.addEventListener('load', function init() {
             fetch( `/${this.dataset.id}`, { method:'DELETE'}).catch((err) => alert(err))
         })
     }
+
+    const dueDates = document.getElementsByClassName('table__due')
+    for (let dueDate of dueDates) {
+        // Sat, Nov 28 2020 - 5:00 PM
+        const due = (new Date(dueDate.dataset.due_date)).toDateString().split(' ')
+
+        dueDate.textContent = `${due[0]}, ${due.slice(1,due.length-1).join(' ')}`
+    }
+
+    //TODO: read list of tasks and get the length of completed ones
+    document.getElementById('success').textContent = 'SUCCESS : 1'
+    document.getElementById('pending').textContent = 'PENDING : 4'
 })
 

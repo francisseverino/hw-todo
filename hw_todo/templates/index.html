@@ -7,12 +7,23 @@
 {% block body %}
 <div class="content">
     <h1 class="content__header">Assignments</h1>
-        <form action="/" method="POST" class="form">
-            <input required type="text" name="assignment" placeholder="Assignment" class="form__input"/>
-            <input required type="datetime-local" name="due_date" placeholder="mm-dd-yyyy, hh:mm am/pm" class="form__input"/>
-            <input required type="text" name="course" placeholder="Course" class="form__input"/>
-            <button type="submit" value="Add Task" class="form__button"><i class="fas fa-location-arrow form__buttonIcon"></i></button>
-        </form>
+    <div class="content__totals">
+        <div class="content__total purple">
+            <span>TOTAL : {{tasks|length}}</span>
+        </div>
+        <div class="content__total green">
+            <span id="success">SUCCESS : {{tasks|length}}</span>
+        </div>
+        <div class="content__total red">
+            <span id="pending">PENDING : {{tasks|length}}</span>
+        </div>
+    </div>
+    <form action="/" method="POST" class="form">
+        <input required type="text" name="assignment" placeholder="Assignment" class="form__input"/>
+        <input required type="datetime-local" name="due_date" placeholder="mm-dd-yyyy, hh:mm am/pm" class="form__input"/>
+        <input required type="text" name="course" placeholder="Course" class="form__input"/>
+        <button type="submit" value="Add Task" class="form__button"><i class="fas fa-location-arrow form__buttonIcon"></i></button>
+    </form>
     {% if tasks|length < 1 %}
     <h4 style="text-align: center">There are no tasks. Create one above!</h4>
     {% else %}
@@ -22,7 +33,7 @@
             <td class="table__assignment">
                 <a class="assignment" data-id={{task.id}} data-assignment="{{task.assignment}}" data-due_date="{{task.due_date.strftime('%Y-%m-%dT%H:%M')}}" data-course="{{task.course}}">{{ task.assignment }}</a>
             </td>
-            <td>{{ task.due_date.date() }}</td>
+            <td class="table__due" data-due_date="{{task.due_date}}">{{ task.due_date.date() }}</td>
             <td>{{ task.course }}</td>
             <td class="table__status">
                 <input type="checkbox" class="checkbox" data-id={{task.id}} name="isCompleted"{% if task.completed %} checked {% else %}{% endif %} />
@@ -42,17 +53,15 @@
     <div id="myModal" class="modal">
 
         <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <!-- <div class="modal"> -->
-                <h1 style="text-align: center">Update Task</h1>
+        <div class="modal__content">
+            <span class="close"><i class="fas fa-times"></i></span>
+                <h1 class="modal__header">Update Task</h1>
                     <form class="form" id="modal__form" method="POST">
                         <input required type="text" name="assignment" placeholder="Assignment" class="form__input" id="modal-assignment"/>
                         <input required type="datetime-local" name="due_date" placeholder="mm-dd-yyyy, hh:mm am/pm" class="form__input" id="modal-due"/>
                         <input required type="text" name="course" placeholder="Course" class="form__input" id="modal-course"/>
-                        <input type="submit" value="Update Task" class="button"/>
+                        <input type="submit" value="Update Task" class="button modal__button"/>
                     </form>
-            <!-- </div> -->
         </div>
     
     </div>

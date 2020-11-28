@@ -34,6 +34,34 @@ body, html {
     color: rgb(108, 108, 108)
 }
 
+.content__totals {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.content__total {
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-size: 14px;
+    /* font-weight: 600; */
+}
+
+.purple {
+    background-color: rgb(95,117,221, 0.2);
+    color: rgb(95,117,221);
+
+}
+
+.green {
+    background-color: rgb(129,180,134, 0.2);
+    color: rgb(129,180,134);
+}
+
+.red {
+    background-color: rgb(237,87,102, 0.2);
+    color: rgb(237,87,102);
+}
+
 .form {
     display: flex;
     flex-wrap: wrap;
@@ -42,7 +70,8 @@ body, html {
 }
 
 .form__input {
-    padding: 8px 0;
+    color: rgb(108, 108, 108);
+    padding: 8px 4px;
     border: 0;
     border-bottom: 1px solid  rgba(17, 190, 239,1);
     flex:1;
@@ -75,6 +104,7 @@ body, html {
 #modal__form .form__input {
     width: 100%;
     margin-bottom: 0.6rem;
+    padding: 8px 0px;
 }
 
 .button {
@@ -92,6 +122,10 @@ body, html {
     color: #fff;
     background-color: rgba(51,51,51,0.5);
     transition: all 0.2s;
+}
+
+.modal__button {
+    margin-top: 1.2rem;
 }
 
 .delete {
@@ -129,7 +163,7 @@ th {
 td {
     padding: 10px 5px;
     color: rgb(108, 108, 108);
-    font-size: 14px;
+    font-size: 15px;
     text-transform: capitalize;
 }
 
@@ -162,25 +196,43 @@ a {
   }
   
   /* Modal Content/Box */
-  .modal-content {
+  .modal__content {
+    position: relative;
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
+    border-radius: 8px;
     max-width: 300px;
+  }
+
+  .modal__header {
+      text-align: center;
+      font-weight: 300;
+      color: rgb(108, 108, 108)
   }
   
   /* The Close Button */
   .close {
-    color: #aaa;
+    display: flex;
+    position: absolute;
+    top: -1rem;
+    right: -0.75rem;
+    background-color: #fff;
+    color: rgb(174, 181, 188);
     float: right;
-    font-size: 28px;
+    font-size: 16px;
     font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
   }
   
   .close:hover,
   .close:focus {
-    color: black;
+    background-color: rgb(238, 116, 112);
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
   }
