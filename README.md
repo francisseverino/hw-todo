@@ -6,9 +6,15 @@ hw-todo is a todo app for all your assignments which synchronizes with Canvas LM
 
 ![alt text](https://github.com/francisseverino/hw-todo/blob/main/screenshots/update.png)
 
+### HW TODO Diagram
+
+![alt text](https://github.com/francisseverino/hw-todo/blob/main/diagram.png)
+
 ## Use cases
 
-Coming soon...
+ - Log all your assignments instead of using a calendar.
+ - Automatically synchronize upcoming assignments from Canvas LMS.
+ - Easily keep all your assignments as a simple todo so you don't forget to do your homework again.
 
 ## Setup
 
