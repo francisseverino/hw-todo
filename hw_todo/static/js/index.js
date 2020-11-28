@@ -65,7 +65,7 @@ window.addEventListener('load', function init() {
     }
 
     //TODO: read list of tasks and get the length of completed ones
-    document.getElementById('success').textContent = 'SUCCESS : 2'
+    document.getElementById('completed').textContent = 'COMPLETED : 2'
     document.getElementById('pending').textContent = 'PENDING : 3'
 })
 
