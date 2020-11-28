@@ -42,7 +42,12 @@ window.addEventListener('load', function init() {
     const checkboxes = document.getElementsByClassName('checkbox')
     for (let checkbox of checkboxes) {
         checkbox.addEventListener('change', function() {
-            fetch( `/complete/${this.dataset.id}`, { method:'PUT'}).catch((err) => alert(err))
+            fetch( `/complete/${this.dataset.id}`, { method:'PUT'})
+            .then(() => {
+                location.reload()
+                return false;
+            })
+            .catch((err) => alert(err))
         });
     }
 
@@ -58,14 +63,21 @@ window.addEventListener('load', function init() {
 
     const dueDates = document.getElementsByClassName('table__due')
     for (let dueDate of dueDates) {
-        // Sat, Nov 28 2020 - 5:00 PM
         const due = (new Date(dueDate.dataset.due_date)).toDateString().split(' ')
 
         dueDate.textContent = `${due[0]}, ${due.slice(1,due.length-1).join(' ')}`
     }
 
-    //TODO: read list of tasks and get the length of completed ones
-    document.getElementById('completed').textContent = 'COMPLETED : 2'
-    document.getElementById('pending').textContent = 'PENDING : 3'
+    document.getElementById('canvasButton').addEventListener('click', function(e) {
+        e.preventDefault()
+        e.target.disabled = true;
+        e.target.className = " button loader";
+        e.target.textContent = ""
+        fetch('/canvas').then(() => {
+            location.reload()
+            return false;
+        }).catch((err) => alert(err))
+        
+    })
 })
 

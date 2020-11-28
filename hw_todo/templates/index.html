@@ -12,10 +12,10 @@
             <span>TOTAL : {{tasks|length}}</span>
         </div>
         <div class="content__total green">
-            <span id="completed">COMPLETED :</span>
+            <span id="completed">COMPLETED : {{ completedTasks }}</span>
         </div>
         <div class="content__total red">
-            <span id="pending">PENDING :</span>
+            <span id="pending">PENDING : {{ pendingTasks }}</span>
         </div>
     </div>
     <form action="/" method="POST" class="form">
@@ -46,7 +46,7 @@
     </table>
     {% endif %}
     <div class="canvas-container">
-        <a class="button" href="/canvas">Pull from Canvas</a>
+        <button class="button" id="canvasButton" >Pull from Canvas</button>
     </div>
 
     <!-- The Modal -->

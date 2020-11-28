@@ -36,8 +36,9 @@ def index():
 
     else:
         tasks = Todo.query.order_by(Todo.due_date).all() #Orders by due date
-        print(tasks[0].due_date)
-        return render_template('index.html', tasks=tasks)
+        completedTasks = len(list(filter(lambda x: x.completed, tasks)))
+        pendingTasks = len(tasks) - completedTasks
+        return render_template('index.html', tasks=tasks, completedTasks=completedTasks, pendingTasks=pendingTasks)
 
 
 @app.route('/update/<int:id>', methods=['POST'])

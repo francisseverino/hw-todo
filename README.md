@@ -6,7 +6,7 @@ hw-todo is a todo app for all your assignments which synchronizes with Canvas LM
 
 ![alt text](https://github.com/francisseverino/hw-todo/blob/main/screenshots/update.png)
 
-### HW TODO Diagram
+### Architecture Diagram
 
 ![alt text](https://github.com/francisseverino/hw-todo/blob/main/diagram.png)
 
