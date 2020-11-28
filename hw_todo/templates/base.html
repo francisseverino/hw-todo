@@ -7,8 +7,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!-- CSS -->
         <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+        <!-- JS Scripts -->
         <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+        <!-- Icons -->
         <script src="https://kit.fontawesome.com/d2c76c7418.js" crossorigin="anonymous"></script>
+        <!-- Favicon -->
+        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
         {% block head %}{% endblock %}
     </head>
 
