@@ -49,7 +49,10 @@ window.addEventListener('load', function init() {
     const deletes = document.getElementsByClassName('delete')
     for (let deleteButton of deletes) {
         deleteButton.addEventListener('click', function() {
-            fetch( `/${this.dataset.id}`, { method:'DELETE'}).catch((err) => alert(err))
+            fetch( `/${this.dataset.id}`, { method:'DELETE'}).then(() => {
+                location.reload()
+                return false;
+            }).catch((err) => alert(err))
         })
     }
 
