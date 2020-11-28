@@ -1,9 +1,14 @@
 from hw_todo import app, db
-from flask import render_template, url_for, request, redirect
+from flask import render_template, url_for, request, redirect, jsonify
 from datetime import datetime
 from hw_todo.models import Todo 
 from .utils import get_canvas_tasks
 
+
+@app.route('/docs')
+def get_docs():
+    print('sending docs')
+    return render_template('swaggerui.html')
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -13,6 +18,8 @@ def index():
     POST -> Add a new task to the db
     """
     if request.method == 'POST':
+        if 'assignment' not in request.form or 'due_date' not in request.form or 'course' not in request.form:
+            return jsonify(({'error': 'assignment, due_date and course required as form data'})), 400
         assignment = request.form['assignment']
         due_date = datetime.strptime(request.form['due_date'], '%Y-%m-%dT%H:%M')
         course = request.form['course']
@@ -29,7 +36,43 @@ def index():
 
     else:
         tasks = Todo.query.order_by(Todo.due_date).all() #Orders by due date
+        print(tasks[0].due_date)
         return render_template('index.html', tasks=tasks)
+
+
+@app.route('/update/<int:id>', methods=['POST'])
+def update(id):
+    """
+    (POST)
+    Updates any field of the given assignment
+    """
+    task = Todo.query.get_or_404(id)
+    task.assignment = request.form['assignment']
+    task.due_date = datetime.strptime(request.form['due_date'], '%Y-%m-%dT%H:%M')
+    task.course = request.form['course']
+
+    try:
+        db.session.commit()
+        return redirect('/')
+    except Exception as e:
+        print(e)
+        return 'There was an issue updating your task'
+
+
+@app.route('/<int:id>', methods=['DELETE'])
+def delete(id):
+    """
+    (DELETE)
+    Deletes the given assignment
+    """
+    task_to_delete = Todo.query.get_or_404(id)
+
+    try:
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return 200
+    except:
+        return 'There was a problem deleting that task'
 
 
 def check_if_exists(canvas_id):
@@ -46,7 +89,7 @@ def check_if_exists(canvas_id):
 
 
 
-@app.route('/canvas',)
+@app.route('/canvas')
 def canvas():
     """
     (GET)
@@ -61,15 +104,15 @@ def canvas():
                 db.session.commit()
             except Exception as e:
                 print(e)
-                return 'There was an issue adding your task'
+                return 'There was an issue pulling your tasks from canvas'
     
     return redirect('/')
 
 
-@app.route('/complete/<int:id>')
+@app.route('/complete/<int:id>', methods=['PUT'])
 def complete(id):
     """
-    (PUT)
+    (GET)
     Updates the completed field of the given assignment to either True or False
     """
     task_to_complete = Todo.query.get_or_404(id)
@@ -78,46 +121,7 @@ def complete(id):
     try:
         task_to_complete.completed = not task_to_complete.completed
         db.session.commit()
-        return redirect('/')
+        return 200
     except Exception as e:
         print(e)
         return 'There was a problem completing that task'
-
-
-@app.route('/delete/<int:id>')
-def delete(id):
-    """
-    (DELETE)
-    Deletes the given assignment
-    """
-    task_to_delete = Todo.query.get_or_404(id)
-
-    try:
-        db.session.delete(task_to_delete)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return 'There was a problem deleting that task'
-
-
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id):
-    """
-    (PUT)
-    Updates any field of the given assignment
-    """
-    task = Todo.query.get_or_404(id)
-    task.due_date = task.due_date.strftime('%Y-%m-%dT%H:%M') # converts due date to string
-
-    if request.method == 'POST':
-        task.content = request.form['content']
-
-        try:
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an issue updating your task'
-
-    else:
-        return render_template('update.html', task=task, )
-

@@ -1,0 +1,189 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "hw-todo is a todo app for all your assignments which synchronizes with Canvas LMS and let's you add your own assignments. [Github repo](https://github.com/francisseverino/hw-todo) .",
+    "version": "1.0.0",
+    "title": "HW Todo",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "severinoguzmanf@moravian.edu"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "task",
+      "description": "Everything about your Tasks",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "task"
+        ],
+        "summary": "Get list of tasks",
+        "description": "Multiple status values can be provided with comma separated strings",
+        "operationId": "findTasks",
+        "produces": [
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "task"
+        ],
+        "summary": "Add a new task to the database",
+        "description": "",
+        "operationId": "addTask",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "assignment",
+            "in": "formData",
+            "type": "string",
+            "description": "Assignment name that needs to be added to the database",
+            "required": true
+          },
+          {
+            "name": "due_date",
+            "in": "formData",
+            "type": "string",
+            "description": "Assignment's due date",
+            "required": true
+          },
+          {
+            "name": "course",
+            "in": "formData",
+            "type": "string",
+            "description": "Course for the assignment",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "assignment, due_date and course required as form data"
+          },
+          "500": {
+            "description": "There was an issue adding your task"
+          }
+        }
+      }
+    },
+    "/{taskId}": {
+      "delete": {
+        "tags": [
+          "task"
+        ],
+        "summary": "Deletes a task from the database",
+        "description": "",
+        "operationId": "deleteTask",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Id of task to be deleted",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "500": {
+            "description": "There was a problem deleting that task"
+          }
+        }
+      }
+    },
+    "/update/{taskId}": {
+      "post": {
+        "tags": [
+          "task"
+        ],
+        "summary": "Updates a task in the database",
+        "description": "",
+        "operationId": "updateTask",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Id of task to be updated",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "500": {
+            "description": "There was a problem deleting that task"
+          }
+        }
+      }
+    },
+    "/canvas": {
+      "get": {
+        "tags": [
+          "task"
+        ],
+        "summary": "Add new assignments from Canvas to the database",
+        "description": "",
+        "operationId": "AddCanvasTask",
+        "produces": [
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "500": {
+            "description": "There was an issue pulling your tasks from canvas"
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about HW Todo",
+    "url": "https://github.com/francisseverino/hw-todo"
+  }
+}
