@@ -4,7 +4,7 @@ import dotenv
 from datetime import datetime
 
 dotenv.load_dotenv()
-CANVAS_TOKEN = os.environ['CANVAS_TOKEN']
+CANVAS_TOKEN = '6802~sPBgGTfhsxxUYUx5tCXJYPSqHmpBgHuk3tON3apnWPDahEWhQoxw7lIPPEdfapQk'
 
 BASE_URL = "https://canvas.instructure.com/api/v1/courses"
 

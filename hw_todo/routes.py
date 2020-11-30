@@ -10,6 +10,7 @@ def get_docs():
     print('sending docs')
     return render_template('swaggerui.html')
 
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     """

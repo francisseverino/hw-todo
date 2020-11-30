@@ -1,6 +1,7 @@
 from hw_todo import db
 from datetime import datetime
 
+
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     assignment = db.Column(db.String(200), nullable=False)
