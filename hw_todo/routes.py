@@ -1,5 +1,5 @@
 from hw_todo import app, db
-from flask import render_template, url_for, request, redirect, jsonify
+from flask import render_template, url_for, request, redirect, jsonify, Response
 from datetime import datetime
 from hw_todo.models import Todo 
 from .utils import get_canvas_tasks
@@ -72,7 +72,7 @@ def delete(id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
-        return 200
+        return Response(status=204)
     except:
         return 'There was a problem deleting that task'
 
@@ -123,7 +123,7 @@ def complete(id):
     try:
         task_to_complete.completed = not task_to_complete.completed
         db.session.commit()
-        return 200
+        return Response(status=204)
     except Exception as e:
         print(e)
         return 'There was a problem completing that task'
