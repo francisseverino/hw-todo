@@ -1,8 +1,7 @@
 from flask import render_template, request, jsonify
 from datetime import datetime
 from hw_todo.utils import get_canvas_tasks
-from hw_todo.tests.tests_models import Todo
-from hw_todo.tests import app, database
+from hw_todo.tests import app
 
 db_canvas = {"Tasks": []}
 db = db_canvas
@@ -28,18 +27,15 @@ def index():
         due_date = datetime.strptime(request.form['due_date'], '%Y-%m-%dT%H:%M')
         course = request.form['course']
 
-        new_task = Todo(assignment=assignment, due_date=due_date, course=course)
 
         try:
             # database.session.add(new_task)
             # database.session.commit()
-            db["Tasks"].append({"Assignment": assignment,
-                                "Due Date": due_date,
-                                "Course": course,
-                                "Completed": False,
-                                "Pending": True})
+            db["Tasks"].append({"assignment": assignment,
+                                "due_date": due_date,
+                                "course": course})
 
-            return {"Assignment": assignment, "Due Date": due_date, "Course": course, "Completed": False, "Pending": True}
+            return db
         except Exception as e:
             print(e)
             return 'There was an issue adding your task'
@@ -51,13 +47,17 @@ def index():
         tasks = db["Tasks"]
         completedTasks = 0
         pendingTasks = 0
-        for x in range(len(tasks)):
-            if tasks[x]["Completed"]:
-                completedTasks += 1
-            if tasks[x]["Pending"]:
-                pendingTasks += 1
 
-        return {"tasks": tasks, "completedTasks": completedTasks, "pendingTasks": pendingTasks}
+        try:
+            for x in range(len(tasks)):
+                if tasks[x]["Completed"]:
+                    completedTasks += 1
+                if tasks[x]["Pending"]:
+                    pendingTasks += 1
+
+            return {"tasks": tasks, "completedTasks": completedTasks, "pendingTasks": pendingTasks}
+        except KeyError:
+            return {"tasks": tasks, "completedTasks": completedTasks, "pendingTasks": pendingTasks}
 
 
 @app.route('/update/<int:id>', methods=['POST'])
