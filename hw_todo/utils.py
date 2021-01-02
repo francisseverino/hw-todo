@@ -2,12 +2,26 @@ import requests
 import os
 import dotenv
 from datetime import datetime
+from hw_todo import app, db
+from hw_todo.models import Todo 
 
 dotenv.load_dotenv()
 CANVAS_TOKEN = os.environ['CANVAS_TOKEN']
 
 BASE_URL = "https://canvas.instructure.com/api/v1/courses"
 
+
+def check_if_exists(canvas_id):
+    """
+    Helper Method
+    Checks if a given canvas assignment already exists in the db
+    :return: Boolean (True if exists in db, False if not)
+    """
+    existing_tasks = Todo.query.all()
+    for task in existing_tasks:
+        if task.canvas_id == canvas_id:
+            return True
+    return False
 
 def get_courses():
     """
@@ -46,10 +60,12 @@ def get_canvas_tasks():
             # description = assignment.get('description') #TODO: Use this later to show client description of assignments
             # html_url = assignment.get('html_url') # TODO: Use this later to give client a clickeable link to the assignment page
 
-            tasks.append({
-                "canvas_id": assignment_id,
-                "assignment": assignment_name,
-                "due_date": due_date,
-                "course": course_name
-            })
+            if not check_if_exists(assignment_id):
+                new_task = Todo(assignment=assignment_name, due_date=due_date, course=course_name, canvas_id=assignment_id)
+                try:
+                    db.session.add(new_task)
+                    db.session.commit()
+                except Exception as e:
+                    print(e)
+                    return 'There was an issue pulling your tasks from canvas'
     return tasks

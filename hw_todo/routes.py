@@ -75,21 +75,7 @@ def delete(id):
         return Response(status=204)
     except:
         return 'There was a problem deleting that task'
-
-
-def check_if_exists(canvas_id):
-    """
-    Helper Method
-    Checks if a given canvas assignment already exists in the db
-    :return: Boolean (True if exists in db, False if not)
-    """
-    existing_tasks = Todo.query.all()
-    for task in existing_tasks:
-        if task.canvas_id == canvas_id:
-            return True
-    return False
-
-
+        
 
 @app.route('/canvas')
 def canvas():
@@ -97,16 +83,7 @@ def canvas():
     (GET)
     Updates the db with all new assignments from Canvas LMS 
     """
-    tasks = get_canvas_tasks()
-    for task in tasks:
-        if not check_if_exists(task['canvas_id']):
-            new_task = Todo(assignment=task['assignment'], due_date=task['due_date'], course=task['course'], canvas_id=task['canvas_id'])
-            try:
-                db.session.add(new_task)
-                db.session.commit()
-            except Exception as e:
-                print(e)
-                return 'There was an issue pulling your tasks from canvas'
+    get_canvas_tasks()
     
     return redirect('/')
 
