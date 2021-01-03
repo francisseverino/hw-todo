@@ -1,15 +1,34 @@
 import requests
 import os
 import dotenv
+from twilio.rest import Client
 from datetime import datetime
 from hw_todo import app, db
-from hw_todo.models import Todo 
+from hw_todo.models import Todo
 
 dotenv.load_dotenv()
 CANVAS_TOKEN = os.environ['CANVAS_TOKEN']
 
 BASE_URL = "https://canvas.instructure.com/api/v1/courses"
 
+
+def send_sms():
+    account_sid = os.environ['TWILIO_ACCOUNT_SID']
+    auth_token = os.environ['TWILIO_AUTH_TOKEN']
+    service_sid = os.environ['TWILIO_MESSAGE_SID']
+    phone_number = os.environ['TWILIO_PHONE_NUMBER'] #TODO: Make it so user gets prompted to write their own phone
+    client = Client(account_sid, auth_token)
+
+    tasks = Todo.query.all()
+
+    message = client.messages \
+        .create(
+            messaging_service_sid=service_sid,
+            body=tasks,
+            to=phone_number
+        )
+
+    print(message.sid)
 
 def check_if_exists(canvas_id):
     """
