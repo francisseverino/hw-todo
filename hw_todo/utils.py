@@ -39,8 +39,8 @@ def check_if_exists(canvas_id):
     existing_tasks = Todo.query.all()
     for task in existing_tasks:
         if task.canvas_id == canvas_id:
-            return True
-    return False
+            return task.id
+    return -1
 
 def get_courses():
     """
@@ -78,8 +78,8 @@ def get_canvas_tasks():
                 assignment.get('due_at'), '%Y-%m-%dT%H:%M:%SZ')
             # description = assignment.get('description') #TODO: Use this later to show client description of assignments
             # html_url = assignment.get('html_url') # TODO: Use this later to give client a clickeable link to the assignment page
-
-            if not check_if_exists(assignment_id):
+            if_exists_id = check_if_exists(assignment_id);
+            if (if_exists_id == -1):
                 new_task = Todo(assignment=assignment_name, due_date=due_date, course=course_name, canvas_id=assignment_id)
                 try:
                     db.session.add(new_task)
@@ -87,4 +87,15 @@ def get_canvas_tasks():
                 except Exception as e:
                     print(e)
                     return 'There was an issue pulling your tasks from canvas'
+            else:
+                task = Todo.query.get_or_404(if_exists_id)
+                task.assignment = assignment_name
+                task.due_date = due_date
+                task.course = course_name
+                try:
+                    db.session.commit()
+                except Exception as e:
+                    print(e)
+                    return 'There was an issue pulling your tasks from canvas'
+                
     return tasks

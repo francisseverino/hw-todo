@@ -5,6 +5,8 @@ from hw_todo.models import Todo
 from .utils import get_canvas_tasks
 
 
+
+
 @app.route('/docs')
 def get_docs():
     print('sending docs')
