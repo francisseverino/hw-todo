@@ -38,7 +38,7 @@ def index():
             return 'There was an issue adding your task'
 
     else:
-        tasks = Todo.query.order_by(Todo.due_date).all() #Orders by due date
+        tasks = Todo.query.order_by(Todo.completed, Todo.due_date).all()
         completedTasks = len(list(filter(lambda x: x.completed, tasks)))
         pendingTasks = len(tasks) - completedTasks
         return render_template('index.html', tasks=tasks, completedTasks=completedTasks, pendingTasks=pendingTasks)
