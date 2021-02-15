@@ -31,14 +31,14 @@
         <table class="table">
             {% for task in tasks %}
             <tr class="table__row">
+                <td class="table__status">
+                    <input type="checkbox" class="checkbox" data-id={{task.id}} name="isCompleted"{% if task.completed %} checked {% else %}{% endif %} />
+                </td>
                 <td class="table__assignment">
                     <a class="assignment" data-id={{task.id}} data-assignment="{{task.assignment}}" data-due_date="{{task.due_date.strftime('%Y-%m-%dT%H:%M')}}" data-course="{{task.course}}">{{ task.assignment }}</a>
                 </td>
                 <td class="table__due" data-due_date="{{task.due_date}}">{{ task.due_date.date() }}</td>
                 <td>{{ task.course }}</td>
-                <td class="table__status">
-                    <input type="checkbox" class="checkbox" data-id={{task.id}} name="isCompleted"{% if task.completed %} checked {% else %}{% endif %} />
-                </td>
                 <td>
                     <i class="far fa-trash-alt delete" data-id={{task.id}}></i>
                 </td>
