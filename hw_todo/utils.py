@@ -77,10 +77,11 @@ def get_canvas_tasks():
             due_date = datetime.strptime(
                 assignment.get('due_at'), '%Y-%m-%dT%H:%M:%SZ')
             # description = assignment.get('description') #TODO: Use this later to show client description of assignments
-            # html_url = assignment.get('html_url') # TODO: Use this later to give client a clickeable link to the assignment page
-            if_exists_id = check_if_exists(assignment_id);
+            html_url = assignment.get('html_url').replace("/canvas.", "/moravian.")
+            
+            if_exists_id = check_if_exists(assignment_id)
             if (if_exists_id == -1):
-                new_task = Todo(assignment=assignment_name, due_date=due_date, course=course_name, canvas_id=assignment_id)
+                new_task = Todo(assignment=assignment_name, due_date=due_date, course=course_name, canvas_id=assignment_id, html_url = html_url)
                 try:
                     db.session.add(new_task)
                     db.session.commit()
@@ -92,6 +93,7 @@ def get_canvas_tasks():
                 task.assignment = assignment_name
                 task.due_date = due_date
                 task.course = course_name
+                task.html_url = html_url
                 try:
                     db.session.commit()
                 except Exception as e:

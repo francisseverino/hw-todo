@@ -4,7 +4,7 @@
 window.addEventListener('load', function init() {
     // Get the modal
     const modal = document.getElementById("myModal");
-    const assignments = document.getElementsByClassName("assignment");
+    const assignments = document.getElementsByClassName("edit");
     const modalClose = document.getElementsByClassName("close")[0];
 
     // When the user clicks on the button, open the modal

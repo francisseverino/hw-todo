@@ -10,6 +10,7 @@ class Todo(db.Model):
     course = db.Column(db.String(200), nullable=False)
     completed = db.Column(db.Boolean, nullable=False, default=False)
     canvas_id = db.Column(db.Integer) #TODO: Read docs, maybe can be unique
+    html_url = db.Column(db.String(255))
 
     def __repr__(self):
         return '<Task %r>' % self.id
